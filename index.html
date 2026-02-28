@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>LALZ TOPUP READY</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(120deg,#1f1c2c,#302b63);color:white;}
+header{padding:25px;text-align:center;font-size:28px;font-weight:bold;background:#111;}
+.container{padding:20px;}
+#landingMsg{font-size:20px;margin-bottom:20px;text-align:center;}
+#search{width:100%;padding:15px;font-size:18px;border:none;border-radius:10px;margin-bottom:20px;}
+.game-card{background:#2c2c54;padding:20px;margin-bottom:15px;border-radius:15px;cursor:pointer;font-size:20px;text-align:center;}
+.game-card:hover{background:#40407a;transform:scale(1.02);transition:0.2s;}
+#loading{display:none;text-align:center;padding:80px;}
+#loading img{width:250px;}
+.nominal button{width:100%;padding:18px;margin-bottom:12px;border:none;border-radius:12px;background:#6a11cb;color:white;font-weight:bold;font-size:18px;cursor:pointer;}
+.nominal button:hover{background:#2575fc;}
+#total{margin-top:20px;font-size:22px;font-weight:bold;}
+#qris img,#methods img{width:150px;margin-top:15px;border-radius:12px;cursor:pointer;}
+#methods{display:flex;flex-wrap:wrap;gap:15px;justify-content:flex-start;}
+#backBtn{margin-top:15px;padding:12px 16px;border:none;border-radius:10px;background:#ff6ec7;color:white;font-size:18px;cursor:pointer;}
+#backBtn:hover{background:#e84393;}
+</style>
+</head>
+<body>
+
+<header>LALZ TOPUP READY</header>
+
+<div class="container" id="landingPage">
+  <div id="landingMsg">
+    Selamat datang di <strong>LALZ TOPUP!</strong><br>
+    Pilih game favoritmu untuk melihat pilihan topup dari yang murah sampai 1 juta!
+  </div>
+  <input type="text" id="search" placeholder="Cari game..." onkeyup="filterGame()">
+  <div id="gameList"></div>
+</div>
+
+<div id="loading">
+  <img src="ls_logo_placeholder.png" alt="LS Logo">
+</div>
+
+<div id="topupSection" style="display:none;">
+  <h2 id="selectedGame">Game</h2>
+  <div class="nominal" id="nominal"></div>
+  <div id="total">Total: -</div>
+  <h3>Metode Pembayaran</h3>
+  <div id="methods">
+    <img src="qris_placeholder.png" alt="QRIS">
+    <img src="dana_placeholder.png" alt="Dana">
+    <img src="ovo_placeholder.png" alt="OVO">
+    <img src="gopay_placeholder.png" alt="GOPAY">
+    <img src="bank_placeholder.png" alt="Bank Transfer">
+  </div>
+  <button id="backBtn" onclick="backToLanding()">← Kembali</button>
+</div>
+
+<script>
+// DATA GAME + NOMINAL
+const gameData=[
+  {name:"Mobile Legends",items:[
+    {label:"70 Diamond",price:11000},{label:"140 Diamond",price:22000},{label:"355 Diamond",price:45000},{label:"720 Diamond",price:88000},{label:"1500 Diamond",price:175000},{label:"3000 Diamond",price:350000},{label:"5000 Diamond",price:580000},{label:"10000 Diamond",price:1150000}
+  ]},
+  {name:"Free Fire",items:[
+    {label:"50 Diamond",price:9000},{label:"140 Diamond",price:19000},{label:"360 Diamond",price:39000},{label:"700 Diamond",price:77000},{label:"1500 Diamond",price:160000},{label:"3000 Diamond",price:330000},{label:"5000 Diamond",price:550000},{label:"10000 Diamond",price:1120000}
+  ]},
+  {name:"Roblox",items:[
+    {label:"80 Robux",price:15000},{label:"400 Robux",price:65000},{label:"800 Robux",price:125000},{label:"1500 Robux",price:220000},{label:"3000 Robux",price:450000},{label:"5000 Robux",price:750000},{label:"10000 Robux",price:1400000}
+  ]},
+  {name:"PUBG Mobile",items:[
+    {label:"60 UC",price:15000},{label:"325 UC",price:75000},{label:"660 UC",price:145000},{label:"1500 UC",price:330000},{label:"3000 UC",price:650000},{label:"5000 UC",price:1080000}
+  ]},
+  {name:"CODM",items:[
+    {label:"80 CP",price:15000},{label:"420 CP",price:75000},{label:"1000 CP",price:165000},{label:"2500 CP",price:400000},{label:"5000 CP",price:780000},{label:"10000 CP",price:1500000}
+  ]},
+  {name:"Genshin Impact",items:[
+    {label:"60 Primogem",price:12000},{label:"300 Primogem",price:54000},{label:"980 Primogem",price:155000},{label:"1980 Primogem",price:300000},{label:"3000 Primogem",price:450000},{label:"5000 Primogem",price:750000}
+  ]},
+  {name:"HOK",items:[
+    {label:"100 Gold",price:10000},{label:"500 Gold",price:45000},{label:"1200 Gold",price:105000},{label:"3000 Gold",price:250000},{label:"5000 Gold",price:400000},{label:"10000 Gold",price:780000}
+  ]},
+  {name:"Valorant",items:[
+    {label:"50 VP",price:12000},{label:"250 VP",price:56000},{label:"500 VP",price:110000},{label:"1000 VP",price:210000},{label:"2000 VP",price:420000}
+  ]},
+  {name:"Apex Legends",items:[
+    {label:"100 Apex Coins",price:15000},{label:"500 Apex Coins",price:70000},{label:"1000 Apex Coins",price:135000},{label:"2500 Apex Coins",price:320000},{label:"5000 Apex Coins",price:640000}
+  ]}
+];
+
+// ELEMENTS
+const gameListEl=document.getElementById("gameList");
+const loadingEl=document.getElementById("loading");
+const topupSection=document.getElementById("topupSection");
+const landingPage=document.getElementById("landingPage");
+const nominalEl=document.getElementById("nominal");
+const selectedGameEl=document.getElementById("selectedGame");
+const totalEl=document.getElementById("total");
+let currentGame=null;
+
+// RENDER GAME LIST
+function renderGames(list=gameData){
+  gameListEl.innerHTML="";
+  list.forEach(g=>{
+    const div=document.createElement("div");
+    div.className="game-card";
+    div.innerText=g.name;
+    div.onclick=()=>selectGame(g);
+    gameListEl.appendChild(div);
+  });
+}
+renderGames();
+
+// SEARCH FILTER
+function filterGame(){
+  const keyword=document.getElementById("search").value.toLowerCase();
+  const filtered=gameData.filter(g=>g.name.toLowerCase().includes(keyword));
+  renderGames(filtered);
+}
+
+// SELECT GAME
+function selectGame(game){
+  currentGame=game;
+  landingPage.style.display="none";
+  loadingEl.style.display="block";
+  setTimeout(()=>{
+    loadingEl.style.display="none";
+    topupSection.style.display="block";
+    selectedGameEl.innerText=game.name;
+    renderNominal(game.items);
+  },2000);
+}
+
+// RENDER NOMINAL
+function renderNominal(items){
+  nominalEl.innerHTML="";
+  items.forEach(i=>{
+    const btn=document.createElement("button");
+    btn.innerText=`${i.label} - Rp${i.price.toLocaleString()}`;
+    btn.onclick=()=>chooseNominal(i);
+    nominalEl.appendChild(btn);
+  });
+}
+
+// PILIH NOMINAL
+function chooseNominal(item){
+  totalEl.innerText=`${currentGame.name} | ${item.label} | Rp${item.price.toLocaleString()}`;
+}
+
+// BACK TO LANDING
+function backToLanding(){
+  topupSection.style.display="none";
+  landingPage.style.display="block";
+  totalEl.innerText="Total: -";
+}
+</script>
+
+</body>
+      </html>

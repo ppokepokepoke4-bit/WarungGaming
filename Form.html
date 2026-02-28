@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Topup Premium</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <h1>Form Topup Premium 20 Game</h1>
+  <p>Pilih game, paket diamond/koin, dan metode pembayaran.</p>
+</header>
+
+<main>
+  <!-- Pilih Game -->
+  <div>
+    <label for="game-select">Pilih Game</label>
+    <select id="game-select">
+      <option value="">-- Pilih Game --</option>
+    </select>
+  </div>
+
+  <!-- Paket Kotak -->
+  <div class="package-grid" id="package-grid">
+    <!-- Paket akan muncul otomatis -->
+  </div>
+
+  <!-- Metode Pembayaran & Input -->
+  <div class="payment-section">
+    <label for="player-id">Masukkan ID / Server</label>
+    <input type="text" id="player-id" placeholder="Contoh: 123456789" required>
+
+    <label for="phone-number">Nomor Telepon</label>
+    <input type="text" id="phone-number" placeholder="08xxxxxxxxxx" required>
+
+    <label for="payment-method">Metode Pembayaran</label>
+    <select id="payment-method">
+      <option value="">-- Pilih Metode --</option>
+      <option value="ovo">OVO</option>
+      <option value="gopay">GoPay</option>
+      <option value="dana">DANA</option>
+      <option value="bank">Bank Transfer</option>
+      <option value="qris" class="qris-option">QRIS</option>
+      <option value="alfamart">Alfamart / Indomaret</option>
+    </select>
+
+    <button id="pay-btn">Lanjutkan Pembayaran</button>
+  </div>
+</main>
+
+<!-- QRIS Preview akan muncul disini -->
+<div class="qris-preview" id="qris-preview" style="display:none;">
+  <img src="qris.png" alt="QRIS">
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

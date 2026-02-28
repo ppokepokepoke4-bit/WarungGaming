@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topup & Pulsa Premium</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+<button class="rgb-btn" onclick="toggleMusic()">Music ON/OFF</button>
+  body {
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#111;
+    color:#fff;
+  }
+  header {
+    text-align:center;
+    padding:2rem 1rem;
+  }
+  header h1 {
+    font-size:2rem;
+    margin-bottom:0.5rem;
+  }
+  header p {
+    font-size:1rem;
+    color:#ccc;
+    max-width:800px;
+    margin:0 auto;
+    line-height:1.5;
+  }
+  .search-container {
+    display:flex;
+    justify-content:center;
+    margin:1rem 0;
+  }
+  .search-container input {
+    width:90%;
+    max-width:400px;
+    padding:0.5rem 1rem;
+    border-radius:25px;
+    border:none;
+    outline:none;
+    font-size:1rem;
+  }
+  .section-label {
+    font-size:1.2rem;
+    font-weight:600;
+    margin:1rem 1rem 0.5rem;
+  }
+  main {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap:1rem;
+    padding:1rem;
+  }
+  .item-card {
+    background:#222;
+    border-radius:20px;
+    text-align:center;
+    padding:1rem;
+    cursor:pointer;
+    transition: all 0.3s ease;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+  }
+  .item-card:hover {
+    background:#333;
+    transform:scale(1.05);
+  }
+  .item-card img {
+    width:50px;
+    height:50px;
+    margin-bottom:0.5rem;
+  }
+  .item-card p {
+    font-weight:600;
+    font-size:0.9rem;
+    margin:0;
+  }
+  footer {
+    text-align:center;
+    padding:1rem;
+    color:#888;
+    font-size:0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Halo, Selamat Datang di Topup Premium!</h1>
+  <p>Pilih game favoritmu atau layanan topup di bawah ini dengan cepat dan aman. Gunakan search bar untuk menemukan game atau layanan yang kamu inginkan.</p>
+  <div class="search-container">
+    <input type="text" id="search-game" placeholder="Cari game atau layanan...">
+  </div>
+</header>
+
+<!-- Section Game Populer -->
+<p class="section-label">Game Populer</p>
+<main id="game-grid">
+  <div class="item-card" data-name="MLBB">
+    <img src="mlbb.png" alt="MLBB">
+    <p>Mobile Legends: Bang Bang</p>
+  </div>
+  <div class="item-card" data-name="Free Fire">
+    <img src="ff.png" alt="Free Fire">
+    <p>Free Fire</p>
+  </div>
+  <div class="item-card" data-name="PUBG">
+    <img src="pubg.png" alt="PUBG">
+    <p>PUBG Mobile</p>
+  </div>
+  <div class="item-card" data-name="CODM">
+    <img src="codm.png" alt="CODM">
+    <p>Call of Duty Mobile</p>
+  </div>
+  <div class="item-card" data-name="Roblox">
+    <img src="roblox.png" alt="Roblox">
+    <p>Roblox</p>
+  </div>
+  <div class="item-card" data-name="FIFA">
+    <img src="fifa.png" alt="FIFA">
+    <p>FIFA Mobile</p>
+  </div>
+  <div class="item-card" data-name="Genshin">
+    <img src="genshin.png" alt="Genshin">
+    <p>Genshin Impact</p>
+  </div>
+  <div class="item-card" data-name="LoL">
+    <img src="lol.png" alt="LoL">
+    <p>League of Legends</p>
+  </div>
+  <div class="item-card" data-name="Minecraft">
+    <img src="minecraft.png" alt="Minecraft">
+    <p>Minecraft</p>
+  </div>
+  <div class="item-card" data-name="Valorant">
+    <img src="valorant.png" alt="Valorant">
+    <p>Valorant</p>
+  </div>
+  <div class="item-card" data-name="Among Us">
+    <img src="anime.png" alt="Among Us">
+    <p>Among Us</p>
+  </div>
+  <div class="item-card" data-name="Clash of Clans">
+    <img src="coc.png" alt="Clash of Clans">
+    <p>Clash of Clans</p>
+  </div>
+  <div class="item-card" data-name="Dota 2">
+    <img src="dota2.png" alt="Dota 2">
+    <p>Dota 2</p>
+  </div>
+  <div class="item-card" data-name="Honkai">
+    <img src="honkai.png" alt="Honkai Impact 3">
+    <p>Honkai Impact 3</p>
+  </div>
+  <div class="item-card" data-name="Pokemon">
+    <img src="pokemon.png" alt="Pokemon Unite">
+    <p>Pokemon Unite</p>
+  </div>
+  <div class="item-card" data-name="Summoners War">
+    <img src="summoners.png" alt="Summoners War">
+    <p>Summoners War</p>
+  </div>
+  <div class="item-card" data-name="Game 18">
+    <img src="anime.png" alt="Game 18">
+    <p>Game 18</p>
+  </div>
+  <div class="item-card" data-name="Game 19">
+    <img src="anime.png" alt="Game 19">
+    <p>Game 19</p>
+  </div>
+  <div class="item-card" data-name="Game 20">
+    <img src="anime.png" alt="Game 20">
+    <p>Game 20</p>
+  </div>
+</main>
+
+<!-- Section Layanan / Topup -->
+<p class="section-label">Layanan & Topup</p>
+<main id="service-grid">
+  <div class="item-card" data-name="Pulsa">
+    <img src="pulsa.png" alt="Pulsa">
+    <p>Pulsa HP</p>
+  </div>
+  <div class="item-card" data-name="Token Listrik">
+    <img src="listrik.png" alt="Token Listrik">
+    <p>Token Listrik</p>
+  </div>
+  <div class="item-card" data-name="OVO">
+    <img src="ovo.png" alt="OVO">
+    <p>OVO Topup</p>
+  </div>
+  <div class="item-card" data-name="GoPay">
+    <img src="gopay.png" alt="GoPay">
+    <p>GoPay Topup</p>
+  </div>
+  <div class="item-card" data-name="DANA">
+    <img src="dana.png" alt="DANA">
+    <p>DANA Topup</p>
+  </div>
+  <div class="item-card" data-name="ShopeePay">
+    <img src="shopeepay.png" alt="ShopeePay">
+    <p>ShopeePay Topup</p>
+  </div>
+  <div class="item-card" data-name="Voucher Game">
+    <img src="voucher.png" alt="Voucher Game">
+    <p>Voucher Digital</p>
+  </div>
+  <div class="item-card" data-name="Pulsa Lain">
+    <img src="pulsa2.png" alt="Pulsa Lain">
+    <p>Pulsa Lainnya</p>
+  </div>
+  <div class="item-card" data-name="Token Listrik Lain">
+    <img src="listrik2.png" alt="Token Listrik Lain">
+    <p>Token Listrik Lain</p>
+  </div>
+  <div class="item-card" data-name="Voucher Lain">
+    <img src="voucher2.png" alt="Voucher Lain">
+    <p>Voucher Lainnya</p>
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 Topup Premium | Dibuat oleh Lalz
+</footer>
+
+<script>
+  // Search filter
+  const searchInput = document.getElementById('search-game');
+  searchInput.addEventListener('input', ()=>{
+    const filter = searchInput.value.toLowerCase();
+    const cards = document.querySelectorAll('.item-card');
+    cards.forEach(card=>{
+      const name = card.dataset.name.toLowerCase();
+      card.style.display = name.includes(filter)?'flex':'none';
+    });
+  });
+
+  // Klik item → simpan ke localStorage dan redirect
+  const cards = document.querySelectorAll('.item-card');
+  cards.forEach(card=>{
+    card.addEventListener('click',()=>{
+      const name = card.dataset.name;
+      localStorage.setItem('selectedPackage', JSON.stringify({name}));
+      window.location.href='form.html';
+    });
+  });
+</script>
+
+</body>
+</html>
